@@ -1,0 +1,78 @@
+﻿<Window x:Class="ShouldIStreamThis.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShouldIStreamThis"
+        xmlns:vm="clr-namespace:ShouldIStreamThis.ViewModel"
+        mc:Ignorable="d"
+        Title="Should I Stream This?" Height="300" Width="600" Background="#262626">
+
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="120" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <Button Content="⚙️" 
+                Grid.Column="0" 
+                Grid.Row="0" 
+                Margin="5" 
+                Command="{Binding OpenSettingsWindowCommand}" 
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
+
+        <TextBox x:Name="SearchBox" 
+                 Grid.Column="1" 
+                 Grid.Row="0" 
+                 Margin="5" 
+                 VerticalContentAlignment="Center"
+                 Text="{Binding SearchGame, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding FetchMetricsCommand}" />
+            </TextBox.InputBindings>
+        </TextBox>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="5">
+            <Label Content="{Binding SearchGame}" Margin="0,0,0,5" />
+            <Label Content="{Binding TotalViewers}" Margin="0,0,0,5" />
+            <Label Content="{Binding TotalChannels}" Margin="0,0,0,5" />
+            <TextBlock Text="This is just a guide and should not be seen as a 100% accurate prediction. It is more important to have fun and engage with your community!" TextWrapping="Wrap" Margin="0,10,0,5" />
+        </StackPanel>
+
+        
+
+        <Border Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Margin="5,0,5,5" Background="{Binding GoOrNoGoColor}" CornerRadius="4">
+            <Label Content="{Binding StatusText}" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" 
+                    />
+            
+        </Border>
+
+
+        <Border Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Margin="5" BorderThickness="2" BorderBrush="#333333" CornerRadius="4">
+            <StackPanel Orientation="Vertical">
+                <Label Content="Red" Foreground="YellowGreen"/>
+                <Label Content="don't stream" FontSize="12"/>
+                <Label Content="Yellow Green"/>
+                <Label Content="Maby stream" FontSize="12"/>
+                <Label Content="Green"/>
+                <Label Content="Go for it!!" FontSize="12"/>
+            </StackPanel>
+        </Border>
+
+        <!--<Border Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="5" Background="{Binding GoOrNoGoColor}" CornerRadius="4"/>-->
+
+    </Grid>
+</Window>
